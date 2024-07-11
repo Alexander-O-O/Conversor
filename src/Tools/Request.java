@@ -1,12 +1,14 @@
 package Tools;
 
+import com.google.gson.Gson;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class Request {
-    public int Valor (String codigo){ //se envía por medio de la clase la solicitud de un tipo de cambio
+    Cambio Valor (String codigo){ //se envía por medio de la clase la solicitud de un tipo de cambio
 
         int cambio = 0;
 
@@ -22,9 +24,11 @@ public class Request {
             HttpResponse<String> response = client
                     .send(request, HttpResponse.BodyHandlers.ofString());
 
-            System.out.println(response.body());
+            String json = response.body();
 
+            System.out.println(json);
 
+            return new Gson().fromJson(json, Cambio.class);
 
         }catch (Exception e){
 
@@ -32,7 +36,6 @@ public class Request {
         }
 
 
-        return cambio;
 
     }
 }
